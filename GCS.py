@@ -36,7 +36,7 @@ except Exception as e:
 # --- Gemini 모델에 전달할 내용 (프롬프트 + 파일) ---
 # 사용자 프롬프트 추가
 if contents: # PDF 파일이 하나라도 성공적으로 로드되었다면 프롬프트 추가
-    user_prompt = "두 문서를 참고하여 문제당 분량이 두 줄 이상인 서비스디자인기사자격증 문제를 5문제 만들어주세요"
+    user_prompt = "두 문서를 참고하여 문제당 분량이 두 줄 이상인 서비스디자인기사자격증 문제를 100문제 만들어주세요"
     contents.append(user_prompt)
     print(f"\n사용자 프롬프트: {user_prompt}")
 else:
