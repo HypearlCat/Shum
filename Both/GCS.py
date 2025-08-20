@@ -49,6 +49,13 @@ if len(contents) > 1: # 최소한 프롬프트와 하나의 PDF 파일이 있어
         response = model.generate_content(contents)
         print("\n--- Gemini 모델 응답 ---")
         print(response.text)
+
+        # 응답을 텍스트 파일로 저장
+        output_file_path = "gemini_response.txt"
+        with open(output_file_path, "w") as f:
+            f.write(response.text)
+        print(f"\n응답을 파일 '{output_file_path}'로 저장했습니다.")
+        
     except Exception as e:
         print(f"Gemini API 호출 중 오류 발생: {e}")
 else:
