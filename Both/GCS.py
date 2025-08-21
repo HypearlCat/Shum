@@ -93,7 +93,7 @@ if len(contents) > 1:
             questions_json = json.loads(response_text)
             
             # JSON을 파일로 저장 (utf-8 인코딩, 들여쓰기 적용)
-            output_file_path = "./Both/gemini_questions.json"
+            output_file_path = "../Both/gemini_questions.json"
             with open(output_file_path, "w", encoding="utf-8") as f:
                 json.dump(questions_json, f, ensure_ascii=False, indent=4)
             
