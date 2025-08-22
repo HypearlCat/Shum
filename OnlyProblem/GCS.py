@@ -8,8 +8,7 @@ project_id = "shum-469607"  # 본인의 Google Cloud 프로젝트 ID로 변경
 location = "us-central1"        # Gemini 모델이 지원되는 리전 (예: us-central1, asia-southeast1)
 
 # GCS에 업로드된 PDF 파일들의 URI (실제 파일 경로로 변경)
-pdf1_gcs_uri = "gs://shum/problem.pdf"
-pdf2_gcs_uri = "gs://shum/theory.pdf"
+pdf2_gcs_uri = ["gs://shum/problem.pdf"]
 
 vertexai.init(project=project_id, location=location)
 model = GenerativeModel("gemini-2.5-flash")  # 또는 "gemini-1.5-flash" 모델 사용 가능
@@ -19,7 +18,7 @@ contents = []
 pdf_files_loaded = 0
 
 # PDF 파일 로드 시도
-for uri in [pdf1_gcs_uri, pdf2_gcs_uri]:
+for uri in pdf2_gcs_uri:
     try:
         pdf_part = Part.from_uri(uri, mime_type="application/pdf")
         contents.append(pdf_part)
@@ -93,7 +92,7 @@ if len(contents) > 1:
             questions_json = json.loads(response_text)
             
             # JSON을 파일로 저장 (utf-8 인코딩, 들여쓰기 적용)
-            output_file_path = "../Both/gemini_questions.json"
+            output_file_path = "../OnlyProblem/gemini_questions.json"
             with open(output_file_path, "w", encoding="utf-8") as f:
                 json.dump(questions_json, f, ensure_ascii=False, indent=4)
             

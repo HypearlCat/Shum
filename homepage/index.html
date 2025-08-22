@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퀴즈 리포트</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;  
+        }
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .category-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+        .category-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .category-btn.active {
+            background-color: #e74c3c;
+        }
+        .category-btn.active:hover {
+            background-color: #c0392b;
+        }
+        .question-card {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ccc;
+        }
+        .question-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 15px 20px;
+        }
+        .options li {
+            background: #e7e7e7;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .options li:hover {
+            background: #d4d4d4;
+        }
+        .answer-info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .answer-info p {
+            margin: 8px 0;
+        }
+        .answer-info p strong {
+            color: #e67e22;
+        }
+        .button-container {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background-color: #4cae4c;
+        }
+        .hidden {
+            display: none;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>퀴즈 리포트</h1>
+        <div class="category-buttons">
+            <button class="category-btn active" onclick="loadQuiz('1.json', this)">참고서+기출</button>
+            <button class="category-btn" onclick="loadQuiz('2.json', this)">참고서</button>
+            <button class="category-btn" onclick="loadQuiz('3.json', this)">기출</button>
+            <button class="category-btn" onclick="loadQuiz('4.json', this)">순수AI</button>
+        </div>
+        <div id="quiz">
+            <div class="loading">문제를 불러오는 중...</div>
+        </div>
+    </div>
+
+    <script>
+        let currentActiveButton = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 페이지 로드시 첫 번째 카테고리(참고서+기출) 자동 로드
+            const firstButton = document.querySelector('.category-btn.active');
+            loadQuiz('1.json', firstButton);
+        });
+
+        function loadQuiz(filename, buttonElement) {
+            // 이전 활성 버튼의 active 클래스 제거
+            if (currentActiveButton) {
+                currentActiveButton.classList.remove('active');
+            }
+            
+            // 클릭된 버튼을 활성 버튼으로 설정
+            buttonElement.classList.add('active');
+            currentActiveButton = buttonElement;
+
+            // 로딩 상태 표시
+            const quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = '<div class="loading">문제를 불러오는 중...</div>';
+
+            // JSON 파일 로드
+            fetch(filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayQuiz(data);
+                })
+                .catch(error => {
+                    quizDiv.innerHTML = `<div class="loading">문제를 불러오지 못했습니다. (${filename})</div>`;
+                    console.error('Error loading quiz:', error);
+                });
+        }
+
+        function displayQuiz(data) {
+            const quizDiv = document.getElementById("quiz");
+            let html = '';
+
+            data.forEach((item, index) => {
+                html += `<div class="question-card">`;
+                // 문제 헤더 (문제 번호)
+                html += `<div class="question-header">문제 ${index + 1}</div>`;
+                // 문제 본문
+                if(item.question) {
+                    html += `<div class="question-text">${item.question}</div>`;
+                }
+                // 선택지 (options)
+                if(item.options) {
+                    html += `<ul class="options">`;
+                    for (const [key, value] of Object.entries(item.options)) {
+                        html += `<li><strong>${key}.</strong> ${value}</li>`;
+                    }
+                    html += `</ul>`;
+                }
+                // 해설/정답/출처 영역 (초기엔 숨김)
+                html += `<div class="answer-info hidden">
+                            ${item.answer ? `<p><strong>정답:</strong> ${item.answer}</p>` : ''}
+                            ${item.explanation ? `<p><strong>해설:</strong> ${item.explanation}</p>` : ''}
+                            ${item.source ? `<p><strong>출처:</strong> ${item.source}</p>` : ''}
+                         </div>`;
+                // 해설 보기 버튼
+                html += `<div class="button-container">
+                            <button class="button reveal-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                         </div>`;
+                html += `</div>`;
+            });
+
+            quizDiv.innerHTML = html;
+        }
+
+        // 해설 영역의 표시/숨김 전환 함수
+        function toggleAnswer(button) {
+            const answerInfo = button.parentElement.previousElementSibling;
+            if(answerInfo.classList.contains('hidden')){
+                answerInfo.classList.remove('hidden');
+                button.innerText = "해설 숨기기";
+            } else {
+                answerInfo.classList.add('hidden');
+                button.innerText = "해설 보기";
+            }
+        }
+    </script>
+</body>
+</html>
