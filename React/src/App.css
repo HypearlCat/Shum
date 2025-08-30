@@ -1,0 +1,173 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F1F3F5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quiz-container {
+  width: 390px;
+  min-height: 844px;
+  background-color: #F1F3F5;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.header {
+  background-color: #FEFEFE;
+  border-bottom: 1px solid #DEE2E6;
+  padding: 20px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 173px;
+}
+
+.logo {
+  width: 80px;
+  height: 40px;
+  background-color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #F1F3F5;
+}
+
+.signin-btn {
+  background-color: #F01E29;
+  color: #F1F3F5;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.footer {
+  background-color: #FEFEFE;
+  border-top: 1px solid #DEE2E6;
+  padding: 20px 20px 40px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.next-btn {
+  background-color: #F01E29;
+  color: #F1F3F5;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.next-btn:disabled {
+  background-color: #CED4DA;
+  cursor: not-allowed;
+}
+
+.next-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 결과 화면 스타일 */
+.result-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-card {
+  background-color: #FEFEFE;
+  border-radius: 28px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.result-card h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 20px;
+}
+
+.result-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #E9ECEF;
+}
+
+.stat:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  font-size: 16px;
+  color: #495057;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #F01E29;
+}
+
+.restart-btn {
+  background-color: #F01E29;
+  color: #F1F3F5;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}

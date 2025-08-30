@@ -1,0 +1,129 @@
+.selection-box {
+  background-color: #FEFEFE;
+  border: 1px solid #CED4DA;
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selection-box:hover {
+  border-color: #868E96;
+}
+
+.selection-box.correct {
+  background-color: #EAFAF6;
+  border-color: #27CDA5;
+}
+
+.selection-box.incorrect {
+  background-color: #FEE9EA;
+  border-color: #F01E29;
+}
+
+.selection-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.option-text {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 400;
+  color: #212529;
+  line-height: 1.2;
+}
+
+.selection-box.correct .option-text {
+  color: #105242;
+}
+
+.selection-box.incorrect .option-text {
+  color: #600C10;
+}
+
+.arrow {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #868E96;
+  transition: transform 0.2s ease;
+}
+
+.selection-box.expanded .arrow {
+  transform: rotate(180deg);
+}
+
+.selection-box.correct .arrow {
+  color: #1FA484;
+}
+
+.selection-box.incorrect .arrow {
+  color: #C01821;
+}
+
+.explanation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.explanation .divider {
+  width: 100%;
+  height: 1px;
+  background-color: #E9ECEF;
+}
+
+.selection-box.correct .explanation .divider {
+  background-color: #D4F5ED;
+}
+
+.selection-box.incorrect .explanation .divider {
+  background-color: #FCD2D4;
+}
+
+.explanation-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #868E96;
+}
+
+.selection-box.correct .explanation-label {
+  color: #177B63;
+}
+
+.selection-box.incorrect .explanation-label {
+  color: #901219;
+}
+
+.explanation-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #495057;
+  line-height: 1.2;
+}
+
+.selection-box.correct .explanation-text {
+  color: #082921;
+}
+
+.selection-box.incorrect .explanation-text {
+  color: #300608;
+}
